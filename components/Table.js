@@ -47,10 +47,10 @@ class Table extends React.Component {
   // heart icon format
   imageFormatter(cell, row){
     if(!row.favorite){
-      return (<img style={{width:20}} src='../images/heart.png'/>)
+      return (<img className='icon' src='../images/heart.png'/>)
     }
     else{
-      return (<img style={{width:20}} src='../images/favorite.png'/>)
+      return (<img className='icon' src='../images/favorite.png'/>)
     }
   }
 

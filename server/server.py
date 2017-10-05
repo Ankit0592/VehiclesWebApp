@@ -11,6 +11,7 @@ def index():
     start = int(offset)
     end = start+250
     data = json.loads(open('./generated.json').read())
+    
     return jsonify(
         data[start:end]
     )

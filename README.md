@@ -15,14 +15,10 @@
 * Column filters are applied only on currently fetched records.  
     
 ### Steps to run application:   
-1. Clone the repository using commang:  
-```
-git clone https://github.ncsu.edu/aarora6/Car.git
-
-```   
-2. From command-prompt, cd car/server  
+1. Download and unzip the project     
+2. From command-prompt, cd vehicles-app/server  
 3. Run command: python server.py   
-4. Open another command-prompt terminal, cd car   
+4. Open another command-prompt terminal, cd vehicles-app       
 5. Run command: npm install     
 6. Run command: npm start   
 7. Open browser at: http://localhost:8080      

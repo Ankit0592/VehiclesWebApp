@@ -24,9 +24,11 @@ class App extends React.Component {
       Request.get(url)
       .query({ offset: '0' })
       .end(function(err, res){
-        self.setState({
-          cars: res.body
-        });
+        if(res.ok){
+          self.setState({
+            cars: res.body
+          });
+        }
       });
     }
 
@@ -58,7 +60,7 @@ class App extends React.Component {
             <h1>Vehicles</h1>
           </header>
            {/* Render Table Component */}
-          <Table onPageChange= {this.onPageChange} currentPage= {this.state.currentPage} data={ this.state.cars } imageFormatter={this.imageFormatter}/>
+          <Table onPageChange= {this.onPageChange} currentPage= {this.state.currentPage} data={ this.state.cars }/>
         </div>
       );
    }
