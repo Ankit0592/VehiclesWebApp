@@ -16,3 +16,7 @@
 li[title="last page"] { 
     display: none;
 }
+
+:focus {
+    outline: 0;
+}
