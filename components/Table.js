@@ -1,8 +1,7 @@
 import React from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import Request from 'superagent';
 import Button from './Button.js';
-import '../style.css'; 
+import '../stylesheets/style.css'; 
 
 class Table extends React.Component {
   constructor(props){
@@ -10,68 +9,48 @@ class Table extends React.Component {
     this.onRowSelect = this.onRowSelect.bind(this);
     this.imageFormatter = this.imageFormatter.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    // this.onPageChange = this.onPageChange.bind(this);
     this.state= {
       disable: true,
       selected: []
     }
   }
   
-  // componentWillMount(){
-  //   var url="http://localhost:5000/cars";
-  //   var self = this;
-  //   Request.get(url)
-  //   .query({ offset: '0' })
-  //   .end(function(err, res){
-  //     self.setState({
-  //       data: res.body
-  //     });
-  //   });
-  // }
-
-  // handle Favorite button click
+  // called on clicking favorite button 
   handleClick(){
     var selected_rows = this.state.selected;
-    for(var i=0; i<selected_rows.length; i++){// toggle favorite
+
+    // toggle favorite
+    for(var i=0; i<selected_rows.length; i++){
       selected_rows[i].favorite = !selected_rows[i].favorite;
     }
     this.setState({selected: selected_rows});
   }
 
-  // selecting single sow to add as favorite
+  // select single row to add as favorite
   onRowSelect(row, isSelected, e) {
-     if (isSelected) { // On row select
-       this.setState({ disable: false });
-       this.state.selected.push(row);
+    // On row select
+    if (isSelected) { 
+      this.setState({ disable: false });
+      this.state.selected.push(row);
+    }  
+    // On row deselect
+    else{
+      var index = this.state.selected.indexOf(row);
+      this.state.selected.splice(index, 1);
+      this.setState({selected: this.state.selected });
+      if(this.state.selected.length == 0){
+        this.setState({ disable: true });
       }  
-      else{ // On row deselect
-        var index = this.state.selected.indexOf(row);
-        this.state.selected.splice(index, 1);
-        this.setState({selected: this.state.selected });
-        if(this.state.selected.length == 0){
-          this.setState({ disable: true });
-        }  
-      }
+    }
   }
 
-  // onPageChange(page, sizePerPage) {
-    
-  //   const currentIndex = (page-1) * sizePerPage;
-  //   console.log(this.props.data);
-  //   console.log(this.props.data.slice(currentIndex, this.props.data.length));
-  //   this.setState({
-  //     data: this.props.data.slice(currentIndex, this.props.data.length),
-  //     currentPage: page
-  //   });
-  // }
-
-  // heart icon view
+  // heart icon format
   imageFormatter(cell, row){
     if(!row.favorite){
-      return (<img style={{width:20}} src='./heart.png'/>)
+      return (<img style={{width:20}} src='../images/heart.png'/>)
     }
     else{
-      return (<img style={{width:20}} src='./favorite.png'/>)
+      return (<img style={{width:20}} src='../images/favorite.png'/>)
     }
   }
 
@@ -93,19 +72,22 @@ class Table extends React.Component {
       1: "Manual"
     };
 
+    // pagination configuration
     const options = {
-      page: this.props.currentPage,  // which page you want to show as default
-      sizePerPageList: [{
-        text: '50', value: 50
+      page: this.props.currentPage, // which page show as default
+      sizePerPageList: [
+      {
+        text: '25', value: 25
       }],
-      sizePerPage: 50,  // which size per page you want to locate as default
+      sizePerPage: 25,  // size per page
       pageStartIndex: 1, // where to start counting the pages
-      paginationSize: 1,  // the pagination bar size.
-      prePage: 'Prev', // Previous page button text
-      nextPage: 'Next',
+      paginationSize: 2,  // the pagination bar size
+      prePage: 'Prev', // previous page button text
+      nextPage: 'Next', // next page button text
       onPageChange: this.props.onPageChange
     };
 
+    // formatter for transmission and fuel type dropdown filter
     function enumFormatter(cell, row, enumObject) {
       return enumObject[cell];
     }
@@ -113,17 +95,19 @@ class Table extends React.Component {
     return (
       <div className = "tablebox">
         {/* Render Button Component */}
-        <Button label="Favorite" disable = {this.state.disable} handleClick = {this.handleClick}/>
+        <Button label="Add/Remove Favorite" disable = {this.state.disable} handleClick = {this.handleClick}/>
+        
         <BootstrapTable selectRow={ selectRowProp } pagination data={ this.props.data } options={ options }>
           <TableHeaderColumn dataSort width='150' dataField='id' dataAlign="center" isKey filter={ { type: 'TextFilter', delay: 1000 } } >ID</TableHeaderColumn>
           <TableHeaderColumn dataSort width='150' dataField='make' dataAlign="center" filter={ { type: 'TextFilter', delay: 1000 } }>Make</TableHeaderColumn>
           <TableHeaderColumn dataSort width='150' dataField='model' dataAlign="center" filter={ { type: 'TextFilter', delay: 1000 } }>Model</TableHeaderColumn>
           <TableHeaderColumn dataSort width='150' dataField='year' dataAlign="center" filter={ { type: 'TextFilter', delay: 1000 } }>Year</TableHeaderColumn>
+          <TableHeaderColumn dataSort width='150' dataField='packages' dataAlign="center" filter={ { type: 'TextFilter', delay: 1000 } }>Package</TableHeaderColumn>
           <TableHeaderColumn width='150' dataField='fuel_type' filterFormatted dataFormat={ enumFormatter } formatExtraData={ fuelType } dataAlign="center" filter={ { type: 'SelectFilter', options: fuelType, selectText: '' } }>Fuel Type</TableHeaderColumn>
           <TableHeaderColumn width='150' dataField='transmission' dataAlign="center" filterFormatted dataFormat={ enumFormatter } formatExtraData={ transmissionType } filter={ { type: 'SelectFilter', options: transmissionType, selectText: '' } }>Transmission</TableHeaderColumn>
-          <TableHeaderColumn width='150' dataField='favourite' dataAlign="center" dataFormat={this.imageFormatter}>Favourite</TableHeaderColumn>
+          <TableHeaderColumn width='150' dataField='favourite' dataAlign="center" dataFormat={this.imageFormatter}>Favorite</TableHeaderColumn>
         </BootstrapTable>
-    </div>
+      </div>
     );
   }
 }
