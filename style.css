@@ -8,3 +8,7 @@
 .app-header{
     text-align: center;
 }
+
+.react-bs-select-all{
+    display: none;
+}
