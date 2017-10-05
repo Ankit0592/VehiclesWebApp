@@ -17,8 +17,8 @@
 git clone https://github.ncsu.edu/aarora6/Car.git
 
 ```   
-2. From command-prompt, cd vehicles-app/server  
+2. From command-prompt, cd car/server  
 3. Run command: python server.py   
-4. Open another command-prompt terminal, cd vehicles-app    
+4. Open another command-prompt terminal, cd car    
 5. Run command: npm start   
 6. Open browser at: http://localhost:8080
