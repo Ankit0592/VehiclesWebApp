@@ -62,7 +62,7 @@ class Table extends React.Component {
       <div className = "tablebox">
         {/* Render Button Component */}
         <Button label="Favorite" disable = {this.state.disable} handleClick = {this.handleClick} />
-        <BootstrapTable selectRow={ selectRowProp } pagination data={ this.props.data } options={ { noDataText: 'This is custom text for empty data' } }>
+        <BootstrapTable selectRow={ selectRowProp } pagination data={ this.props.data } options={ { noDataText: 'No records found.' } }>
           <TableHeaderColumn dataSort width='150' dataField='id' dataAlign="center" isKey filter={ { type: 'TextFilter', delay: 1000 } } >ID</TableHeaderColumn>
           <TableHeaderColumn dataSort width='150' dataField='make' dataAlign="center" filter={ { type: 'TextFilter', delay: 1000 } }>Make</TableHeaderColumn>
           <TableHeaderColumn dataSort width='150' dataField='model' dataAlign="center" filter={ { type: 'TextFilter', delay: 1000 } }>Model</TableHeaderColumn>
