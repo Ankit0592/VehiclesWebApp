@@ -3,6 +3,9 @@
 ### Frameworks:  
 * **Back-end:** Flask
 * **Front-end:** ReactJS    
+        
+### Requirements:   
+* Python, Flask and npm are installed on system     
     
 ### Assumptions:  
 * Anyone can access the webpage. It has no authentication mechanism.    
@@ -19,6 +22,7 @@ git clone https://github.ncsu.edu/aarora6/Car.git
 ```   
 2. From command-prompt, cd car/server  
 3. Run command: python server.py   
-4. Open another command-prompt terminal, cd car    
-5. Run command: npm start   
-6. Open browser at: http://localhost:8080
+4. Open another command-prompt terminal, cd car   
+5. Run command: npm install     
+6. Run command: npm start   
+7. Open browser at: http://localhost:8080      
