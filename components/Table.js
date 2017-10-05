@@ -1,20 +1,34 @@
 import React from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import Request from 'superagent';
 import Button from './Button.js';
-import '../style.css';
+import '../style.css'; 
 
 class Table extends React.Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.onRowSelect = this.onRowSelect.bind(this);
     this.imageFormatter = this.imageFormatter.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    // this.onPageChange = this.onPageChange.bind(this);
     this.state= {
       disable: true,
       selected: []
     }
   }
   
+  // componentWillMount(){
+  //   var url="http://localhost:5000/cars";
+  //   var self = this;
+  //   Request.get(url)
+  //   .query({ offset: '0' })
+  //   .end(function(err, res){
+  //     self.setState({
+  //       data: res.body
+  //     });
+  //   });
+  // }
+
   // handle Favorite button click
   handleClick(){
     var selected_rows = this.state.selected;
@@ -39,6 +53,17 @@ class Table extends React.Component {
         }  
       }
   }
+
+  // onPageChange(page, sizePerPage) {
+    
+  //   const currentIndex = (page-1) * sizePerPage;
+  //   console.log(this.props.data);
+  //   console.log(this.props.data.slice(currentIndex, this.props.data.length));
+  //   this.setState({
+  //     data: this.props.data.slice(currentIndex, this.props.data.length),
+  //     currentPage: page
+  //   });
+  // }
 
   // heart icon view
   imageFormatter(cell, row){
@@ -68,6 +93,19 @@ class Table extends React.Component {
       1: "Manual"
     };
 
+    const options = {
+      page: this.props.currentPage,  // which page you want to show as default
+      sizePerPageList: [{
+        text: '50', value: 50
+      }],
+      sizePerPage: 50,  // which size per page you want to locate as default
+      pageStartIndex: 1, // where to start counting the pages
+      paginationSize: 1,  // the pagination bar size.
+      prePage: 'Prev', // Previous page button text
+      nextPage: 'Next',
+      onPageChange: this.props.onPageChange
+    };
+
     function enumFormatter(cell, row, enumObject) {
       return enumObject[cell];
     }
@@ -75,8 +113,8 @@ class Table extends React.Component {
     return (
       <div className = "tablebox">
         {/* Render Button Component */}
-        <Button label="Favorite" disable = {this.state.disable} handleClick = {this.handleClick} />
-        <BootstrapTable selectRow={ selectRowProp } pagination data={ this.props.data } options={ { noDataText: 'No records found.' } }>
+        <Button label="Favorite" disable = {this.state.disable} handleClick = {this.handleClick}/>
+        <BootstrapTable selectRow={ selectRowProp } pagination data={ this.props.data } options={ options }>
           <TableHeaderColumn dataSort width='150' dataField='id' dataAlign="center" isKey filter={ { type: 'TextFilter', delay: 1000 } } >ID</TableHeaderColumn>
           <TableHeaderColumn dataSort width='150' dataField='make' dataAlign="center" filter={ { type: 'TextFilter', delay: 1000 } }>Make</TableHeaderColumn>
           <TableHeaderColumn dataSort width='150' dataField='model' dataAlign="center" filter={ { type: 'TextFilter', delay: 1000 } }>Model</TableHeaderColumn>

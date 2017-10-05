@@ -12,3 +12,7 @@
 .react-bs-select-all{
     display: none;
 }
+
+li[title="last page"] { 
+    display: none;
+}

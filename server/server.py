@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import json
 
@@ -7,9 +7,12 @@ CORS(app)
 
 @app.route("/cars")
 def index():
+    offset = request.args.get('offset')
+    start = int(offset)
+    end = start+250
     data = json.loads(open('./generated.json').read())
     return jsonify(
-        data
+        data[start:end]
     )
 
 
