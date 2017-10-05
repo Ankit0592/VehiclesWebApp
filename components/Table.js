@@ -58,6 +58,20 @@ class Table extends React.Component {
       onSelect: this.onRowSelect
     };
 
+    const fuelType = {
+      0: 'Petrol',
+      1: 'Diesel'
+    };
+
+    const transmissionType = {
+      0: "Automatic",
+      1: "Manual"
+    };
+
+    function enumFormatter(cell, row, enumObject) {
+      return enumObject[cell];
+    }
+
     return (
       <div className = "tablebox">
         {/* Render Button Component */}
@@ -67,8 +81,8 @@ class Table extends React.Component {
           <TableHeaderColumn dataSort width='150' dataField='make' dataAlign="center" filter={ { type: 'TextFilter', delay: 1000 } }>Make</TableHeaderColumn>
           <TableHeaderColumn dataSort width='150' dataField='model' dataAlign="center" filter={ { type: 'TextFilter', delay: 1000 } }>Model</TableHeaderColumn>
           <TableHeaderColumn dataSort width='150' dataField='year' dataAlign="center" filter={ { type: 'TextFilter', delay: 1000 } }>Year</TableHeaderColumn>
-          <TableHeaderColumn dataSort width='150' dataField='fuel_type' dataAlign="center">Fuel Type</TableHeaderColumn>
-          <TableHeaderColumn dataSort width='150' dataField='transmission' dataAlign="center">Transmission</TableHeaderColumn>
+          <TableHeaderColumn width='150' dataField='fuel_type' filterFormatted dataFormat={ enumFormatter } formatExtraData={ fuelType } dataAlign="center" filter={ { type: 'SelectFilter', options: fuelType, selectText: '' } }>Fuel Type</TableHeaderColumn>
+          <TableHeaderColumn width='150' dataField='transmission' dataAlign="center" filterFormatted dataFormat={ enumFormatter } formatExtraData={ transmissionType } filter={ { type: 'SelectFilter', options: transmissionType, selectText: '' } }>Transmission</TableHeaderColumn>
           <TableHeaderColumn width='150' dataField='favourite' dataAlign="center" dataFormat={this.imageFormatter}>Favourite</TableHeaderColumn>
         </BootstrapTable>
     </div>
